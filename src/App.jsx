@@ -8,6 +8,7 @@ import JobPage from './pages/job'
 import PostJob from './pages/PostJob'
 import SavedJobs from './pages/SavedJobs'
 import MyJobs from './pages/my-jobs'
+import { ThemeProvider } from './components/theme-provider'
 
 function App() {
 
@@ -48,11 +49,10 @@ function App() {
   ])
 
   return (
-    <RouterProvider router={router}>
-      <div className="text-rose-600 text-6xl">
-        Harsh
-      </div>
-    </RouterProvider>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <RouterProvider router={router} />
+    </ThemeProvider>
+
   )
 }
 

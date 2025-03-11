@@ -10,6 +10,8 @@ import SavedJobs from './pages/SavedJobs'
 import MyJobs from './pages/my-jobs'
 import { ThemeProvider } from './components/theme-provider'
 
+// TS - 53:00
+
 function App() {
 
   const router = createBrowserRouter([

@@ -7,17 +7,17 @@ function Header() {
     <>
       <nav className="py-4 flex justify-between items-center">
         <Link to={'/'}>
-          JN
+          JobNest
         </Link>
-        {/* <Button variant="outline">
+        <Button variant="outline">
           Login
-        </Button> */}
-        <SignedOut>
+        </Button>
+        {/* <SignedOut>
           <SignInButton />
         </SignedOut>
         <SignedIn>
           <UserButton />
-        </SignedIn>
+        </SignedIn> */}
       </nav>
     </>
   )

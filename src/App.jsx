@@ -11,7 +11,7 @@ import MyJobs from './pages/my-jobs'
 import { ThemeProvider } from './components/theme-provider'
 import ProtectedRoute from './components/protected-route'
 
-// TS - 1:11:00
+// TS - 1:51:00
 
 function App() {
 

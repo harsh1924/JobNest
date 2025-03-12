@@ -1,11 +1,12 @@
 import { Link, useSearchParams } from "react-router-dom"
 import { Button } from "./ui/button"
-import { SignedIn, SignedOut, SignIn, UserButton } from "@clerk/clerk-react"
+import { SignedIn, SignedOut, SignIn, UserButton, useUser } from "@clerk/clerk-react"
 import { BriefcaseBusiness, HeartIcon, PenBoxIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 
 function Header() {
   const [showSignIn, setShowSignIn] = useState(false);
+  const { user } = useUser();
 
   const [search, setSearch] = useSearchParams();
 
@@ -36,12 +37,14 @@ function Header() {
             </Button>
           </SignedOut>
           <SignedIn>
-            <Link to='/post-job'>
-              {/* Add Recuriter Condition */}
-              {<Button variant="destructive" className="rounded-full">
-                <PenBoxIcon size={20} className="mr-2" />Post a Job
-              </Button>}
-            </Link>
+            {user?.unsafeMetaData?.role === 'recruiter' && (
+              <Link to='/post-job'>
+                {/* Add Recuriter Condition */}
+                <Button variant="destructive" className="rounded-full">
+                  <PenBoxIcon size={20} className="mr-2" />Post a Job
+                </Button>
+              </Link>
+            )}
             <UserButton
               appearance={{
                 elements: {

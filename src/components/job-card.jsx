@@ -4,6 +4,9 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card"
 import { Heart, MapPinIcon, Trash2Icon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
+import { saveJobs } from "@/api/apiJobs";
+import useFetch from "@/hooks/useFetch";
+import { useEffect, useState } from "react";
 
 const JobCard = ({
     job,
@@ -11,7 +14,27 @@ const JobCard = ({
     savedInit = false,
     onJobSaved = () => { }
 }) => {
+    const [saved, setSaved] = useState(savedInit);
+    const {
+        fn: fnSavedJobs,
+        data: savedJobs,
+        loading: loadingSavedJobs
+    } = useFetch(saveJobs, {
+        alreadySaved: saved
+    });
+
     const { user } = useUser();
+    const handleSaveJob = async () => {
+        await fnSavedJobs({
+            user_id: user.id,
+            job_id: job.id
+        });
+        onJobSaved();
+    }
+
+    useEffect(() => {
+        if (savedJobs !== undefined) setSaved(savedJobs?.length > 0)
+    }, [savedJobs])
     return (
         <Card className="">
             <CardHeader>
@@ -33,7 +56,7 @@ const JobCard = ({
                     </div>
                 </div>
                 <hr />
-                {job.description.substring(0, job.description.indexOf("."))}
+                {/* {job?.description.substring(0, job.description.indexOf("."))} */}
             </CardContent>
             <CardFooter className="flex gap-2">
                 <Link to={`/job/${job.id}`} className="flex-1">
@@ -41,8 +64,20 @@ const JobCard = ({
                         More Details
                     </Button>
                 </Link>
-
-                <Heart size={20} stroke="red" fill="red" />
+                {!isMyJob && (
+                    <Button
+                        variant='outline'
+                        className='w-15'
+                        onClick={handleSaveJob}
+                        disabled={loadingSavedJobs}
+                    >
+                        {saved ? (
+                            <Heart size={20} stroke="red" fill="red" />
+                        ) : (
+                            <Heart size={20} stroke="red" />
+                        )}
+                    </Button>
+                )}
             </CardFooter>
         </Card>
     );

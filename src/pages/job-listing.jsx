@@ -44,7 +44,11 @@ function JobListing() {
         <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {jobs?.length ? (
             jobs.map((job) => {
-              return <JobCard key={job.id} job={job} />
+              return <JobCard
+                key={job.id}
+                job={job}
+                savedInit={job?.saved?.length > 0}
+              />
             })
           ) : (
             <div className="text-[#FFD700] flex items-center justify-center mt-10 text-7xl">No Jobs Found!</div>
